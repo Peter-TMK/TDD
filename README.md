@@ -1,6 +1,6 @@
 # TDD - Test-Driven Development with JEST/SUPERTEST
 
-The are different types of Testing:
+There are different types of Testing:
 
 Unit Testing - Involves individual testing of functions that collectively make up our code base or business logic
 Integration Testing - Involves the testing of software modules/functions that are integrated, as a group.
