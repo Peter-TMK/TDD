@@ -1,3 +1,26 @@
+const { sum, deleteByAwards } = require("../utils/helper")
+
+
+let example = []
+console.log(example, "before running all functions")
+beforeAll(()=>{
+    example = ["dance", "merry", "joyful"]
+    console.log(example, "Running Before All")
+})
+
+beforeEach(()=>{
+    console.log("Running Before Each")
+})
+
+afterEach(()=>{
+    console.log("Running After Each")
+})
+
+afterAll(()=>{
+    example = []
+    console.log(example, "Running After All")
+})
+
 
 // Numbers
 
@@ -164,5 +187,40 @@ describe("Reference type equality", ()=>{
                 })
             ])
         )
+    })
+})
+
+describe("Arithmetic operations", ()=>{
+    it("Calculate the sum of 4 and 11 to give 15", ()=>{
+        expect(sum(4,11)).toBe(15)
+    })
+
+    it("delete some drivers by their awards", ()=>{
+        let player = [
+            {
+                driver: "Tenq",
+                awards: 7
+            },
+            {
+                driver: "Timmy",
+                awards: 5
+            },
+            {
+                driver: "Bronson",
+                awards: 9
+            }
+        ]
+
+        expect(deleteByAwards(player, 5)).toEqual([
+            {
+                driver: "Tenq",
+                awards: 7
+            },
+            {
+                driver: "Bronson",
+                awards: 9
+            },
+        ])
+        expect(deleteByAwards(player, 5).length).toBe(2)
     })
 })
