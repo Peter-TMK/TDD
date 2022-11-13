@@ -10,7 +10,7 @@ app.use("/api/users", userRoute);
 describe("Integration test for the articles API", ()=>{
     it("should GET /api/users - success - get all users", async ()=>{
         const {body, statusCode } = await request(app).get("/api/users");
-
+        
         expect(body).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
@@ -32,6 +32,7 @@ describe("Integration test for the articles API", ()=>{
             password: "Lorenzoipsumionlol"
         });
 
+        console.log(body)
         expect(statusCode).toBe(400);
         expect(body).toEqual({
             errors: [
