@@ -65,9 +65,45 @@ describe("Integration test for the articles API", ()=>{
             author: "635eddc34dc4ea98561cf7t4"
     });
         expect(statusCode).toBe(404);
+        // console.log(body)
         expect(body).toEqual({
             error: true,
             message: "Article not found!"
+        });
+    });
+
+    it("should UPDATE /api/articles/:articleId - SUCCESS on valid updating body", async ()=>{
+        const { body, statusCode } = await request(app).put("/api/articles/0.4076434514763356").send({
+            title: "Updated Title ...",
+            author: "Excel"
+    });
+        expect(statusCode).toBe(201);
+        // console.log(body)
+        expect(body).toEqual({
+            "author": "Excel",
+            "id": "0.4076434514763356",
+            "title": "Updated Title ...",
+        });
+    });
+
+    it("should DELETE /api/articles/:articleId - FAILURE if article is not found", async ()=>{
+        const { body, statusCode } = await request(app).delete("/api/articles/0.23966282956572127");
+        console.log(statusCode)
+        expect(statusCode).toBe(404);
+        expect(body).toEqual({
+            error: true,
+            message: "Article not found!"
+        });
+    });
+
+    it("should DELETE /api/articles/:articleId - SUCCESS if article is found", async ()=>{
+        const { body, statusCode } = await request(app).delete("/api/articles/635f9d229a39346186b332cf");
+        // console.log(body)
+        // console.log(statusCode)
+        expect(statusCode).toBe(404);
+        expect(body).toEqual({
+            error: true,
+            message: 'Article not found!'
         });
     });
 });
