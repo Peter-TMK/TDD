@@ -49,7 +49,7 @@ router.put("/:articleId", (req, res)=>{
     const { articleId } = req.params;
     const { title, author, body } = req.body;
     // console.log(articleId);
-    const foundArticle = articlesData.find((article) => article.id === articleId);
+    const foundArticle = articlesData.find((article) => article.id == articleId);
     // console.log(article.id);
     if(!foundArticle){
         return res.status(404).send({
@@ -57,6 +57,59 @@ router.put("/:articleId", (req, res)=>{
             message: "Article not found!"
         });
     }
+
+    let updatedArticle = null;
+
+    const updatedArticles = articlesData.map((article)=>{
+        if(article.id == articleId){
+            updatedArticle = {
+                ...article,
+                title,
+                author,
+                body
+            };
+            return updatedArticle;
+        }
+        return article;
+    });
+    const isSaved = save(updatedArticles);
+
+    if(!isSaved){
+        return res.status(500).json({
+            error: true,
+            message: "Article not saved!"
+        });
+    }
+
+    res.status(201).json(updatedArticle)
+});
+
+router.delete("/:articleId", (req, res)=>{
+    const { articleId } = req.params;
+    const { title, author, body } = req.body;
+    // console.log(articleId);
+    const foundArticle = articlesData.find((article) => article.id == articleId);
+    // console.log(article.id);
+    if(!foundArticle){
+        return res.status(404).send({
+            error: true,
+            message: "Article not found!"
+        });
+    }
+    const filteredArticles = articlesData.filter((article) => article.id == articleId);
+
+    const isSaved = save(filteredArticles)
+
+    if(!isSaved){
+        return res.status(500).send({
+            error: true,
+            message: "Article not saved!"
+        });
+    }
+
+    res.status(201).json({
+        message: "Success"
+    })
 });
 
 module.exports = router;
